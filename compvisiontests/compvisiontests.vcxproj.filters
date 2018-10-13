@@ -18,9 +18,21 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="homographytest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sfm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="homographytest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sfm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="compvisiontests.cpp">
