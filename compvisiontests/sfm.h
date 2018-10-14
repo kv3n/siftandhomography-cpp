@@ -1,5 +1,6 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
 
-void ProcessSFM(std::string image_1, std::string image_2, bool show_result = false);
+void ProcessSFM(std::filesystem::path image1_path, std::filesystem::path image2_path, bool show_result = false);
