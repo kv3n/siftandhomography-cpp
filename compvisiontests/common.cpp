@@ -74,25 +74,29 @@ void WriteMatchesOutput(std::string dir_name,
 				maskedTop20Matches.push_back(filteredMatches[matchIndex]);
 			}
 		}
-		cv::drawMatches(sourceImage, sourceKeypoints, destinationImage, destinationKeypoints, maskedTop20Matches, output);
+		cv::drawMatches(sourceImage, sourceKeypoints, destinationImage, destinationKeypoints, maskedTop20Matches, output, cv::Scalar(0, 255, 0));
 	}	
 	else
 	{
 		destinationImage.copyTo(output);
 	}
 
-	// The box in our matches is offset by the object image. Hence the need for this shift.
-	if (!boxInScene.empty())
+	if (!output.empty())
 	{
-		std::vector<cv::Point2i> boxInSceneOffset;
-		for (unsigned int i = 0; i < boxInScene.size(); i++)
+		// The box in our matches is offset by the object image. Hence the need for this shift.
+		if (!boxInScene.empty())
 		{
-			boxInSceneOffset.push_back(cv::Point2i((int)(boxInScene[i].x + (float)sourceImage.getMat().cols), (int)boxInScene[i].y));
+			std::vector<cv::Point2i> boxInSceneOffset;
+			for (unsigned int i = 0; i < boxInScene.size(); i++)
+			{
+				boxInSceneOffset.push_back(cv::Point2i((int)(boxInScene[i].x + (float)sourceImage.getMat().cols), (int)boxInScene[i].y));
+			}
+			cv::polylines(output, boxInSceneOffset, true, cv::Scalar(0, 0, 255, 0), 2);
 		}
-		cv::polylines(output, boxInSceneOffset, true, cv::Scalar(0, 0, 255, 0), 2);
 
-		cv::imwrite("Output\\" + output_name + ".jpg", output);
-	}	
+
+		cv::imwrite("Output\\" + dir_name + "\\" + output_name + ".jpg", output);
+	}
 
 	if (showImage)
 	{
