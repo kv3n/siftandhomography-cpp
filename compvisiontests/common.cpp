@@ -49,7 +49,8 @@ void WriteMatchesOutput(std::string dir_name,
 	bool showImage)
 {
 	// Keep interim pre-homography output for display
-	MatchNeighbours displayedTop20Matches(filteredMatches.begin(), filteredMatches.begin() + MAX_MATCHES);
+	int matchSize = std::min(MAX_MATCHES, int(filteredMatches.size()));
+	MatchNeighbours displayedTop20Matches(filteredMatches.begin(), filteredMatches.begin() + matchSize);
 
 
 	cv::Mat preHomographyOutput;
@@ -65,16 +66,16 @@ void WriteMatchesOutput(std::string dir_name,
 	if (!MatchMask.empty())
 	{
 		// Filtering results post-homography from the homographyMask
-		MatchNeighbours maskedTop20Matches;
-		for (unsigned int matchIndex = 0; matchIndex < filteredMatches.size() && maskedTop20Matches.size() < MAX_MATCHES; matchIndex++)
+		MatchNeighbours maskedTopMatches;
+		for (unsigned int matchIndex = 0; matchIndex < filteredMatches.size() && maskedTopMatches.size() < MAX_MATCHES; matchIndex++)
 		{
 			unsigned int element = (unsigned int)MatchMask.at<unsigned char>(matchIndex, 0);
 			if (1 == element)
 			{
-				maskedTop20Matches.push_back(filteredMatches[matchIndex]);
+				maskedTopMatches.push_back(filteredMatches[matchIndex]);
 			}
 		}
-		cv::drawMatches(sourceImage, sourceKeypoints, destinationImage, destinationKeypoints, maskedTop20Matches, output, cv::Scalar(0, 255, 0));
+		cv::drawMatches(sourceImage, sourceKeypoints, destinationImage, destinationKeypoints, maskedTopMatches, output, cv::Scalar(0, 255, 0));
 	}	
 	else
 	{

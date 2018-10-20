@@ -8,7 +8,7 @@ typedef std::vector<cv::KeyPoint> KeyPoints;
 
 const int NUM_NEAREST_NEIGHBOURS = 2;
 const double THRESHOLD_DISTANCE = 0.7;
-const int MAX_MATCHES = 20;
+const int MAX_MATCHES = 100;
 
 
 void WriteKeyPointOutput(std::string dir_name, 

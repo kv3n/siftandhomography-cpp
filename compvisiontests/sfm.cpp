@@ -2,8 +2,6 @@
 #include "common.h"
 #include "sfm.h"
 
-#include "opencv2/flann.hpp"
-
 void ProcessSFM(std::filesystem::path image1_path, std::filesystem::path image2_path, bool show_result)
 {
 	using namespace cv;
@@ -92,4 +90,9 @@ void ProcessSFM(std::filesystem::path image1_path, std::filesystem::path image2_
 		good_matches, good_matches.size(), matches.size(),
 		object_box_outline, essentialMatrixMask,
 		show_result);
+
+	Mat rotation, translation, mask;
+	recoverPose(essentialMatrix, image1_points, image2_points, intrinsicMatrix, rotation, translation, mask);
+
+	std::cout << "Rotation: \n" << rotation << "\nTranslation: \n" << translation<<std::endl<<std::endl;
 }
