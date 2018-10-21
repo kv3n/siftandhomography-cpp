@@ -91,8 +91,54 @@ void ProcessSFM(std::filesystem::path image1_path, std::filesystem::path image2_
 		object_box_outline, essentialMatrixMask,
 		show_result);
 
-	Mat rotation, translation, mask;
-	recoverPose(essentialMatrix, image1_points, image2_points, intrinsicMatrix, rotation, translation, mask);
+	Mat rotation, translation;
+	recoverPose(essentialMatrix, image1_points, image2_points, rotation, translation);
 
 	std::cout << "Rotation: \n" << rotation << "\nTranslation: \n" << translation<<std::endl<<std::endl;
+
+	// Calculate the Full-Projection Matrix
+	Mat leftCameraM;
+	hconcat(Mat::eye(3, 3, CV_64F), Mat::zeros(3, 1, CV_64F), leftCameraM);
+	leftCameraM = intrinsicMatrix * leftCameraM;
+
+	Mat rightCameraM;
+	hconcat(rotation, translation, rightCameraM);
+	rightCameraM = intrinsicMatrix * rightCameraM;
+
+
+	// Undistort Consistent Points
+	std::vector<Point2f> image1_consistent_points, image2_consistent_points;
+	for (int i = 0; i < image1_points.size(); i++)
+	{
+		unsigned int element = (unsigned int)essentialMatrixMask.at<unsigned char>(i, 0);
+		if (1 == element)
+		{
+			image1_consistent_points.push_back(image1_points[i]);
+			image2_consistent_points.push_back(image2_points[i]);
+		}
+	}
+
+	std::vector<Point2f> image1_undistorted_points, image2_undistorted_points;
+	undistortPoints(image1_consistent_points, image1_undistorted_points, intrinsicMatrix, noArray());
+	undistortPoints(image2_consistent_points, image2_undistorted_points, intrinsicMatrix, noArray());
+
+
+	// Traingulate points to get final image points
+	Mat triangulatedPoints;
+	triangulatePoints(leftCameraM, rightCameraM, image1_undistorted_points, image2_undistorted_points, triangulatedPoints);	
+	transpose(triangulatedPoints, triangulatedPoints);	
+
+	std::vector<Point3f> pointCloud;	
+	convertPointsFromHomogeneous(triangulatedPoints, pointCloud);
+
+
+	// Print out points for python
+	std::ofstream myfile;
+	myfile.open("Output\\sfm\\points_" + image1_name + "_" + image2_name + ".txt");
+	for (std::vector<Point3f>::iterator pointCloudItr = pointCloud.begin(); pointCloudItr != pointCloud.end(); pointCloudItr++)
+	{
+		Point3f point = *pointCloudItr;
+		myfile << point.x <<", " << point.y <<", "<<point.z <<std::endl;
+	}
+	myfile.close();
 }
