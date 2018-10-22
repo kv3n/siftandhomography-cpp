@@ -94,7 +94,14 @@ void ProcessSFM(std::filesystem::path image1_path, std::filesystem::path image2_
 	Mat rotation, translation;
 	recoverPose(essentialMatrix, image1_points, image2_points, rotation, translation);
 
-	std::cout << "Rotation: \n" << rotation << "\nTranslation: \n" << translation<<std::endl<<std::endl;
+	Mat rotationVec;
+	Rodrigues(rotation, rotationVec);
+	double degconv = (180.0 / 3.141592653589793238463);
+	rotationVec.at<double>(0, 0) = rotationVec.at<double>(0, 0) * degconv;
+	rotationVec.at<double>(1, 0) = rotationVec.at<double>(1, 0) * degconv;
+	rotationVec.at<double>(2, 0) = rotationVec.at<double>(2, 0) * degconv;
+
+	std::cout << "Rotation: \n" << rotation <<"\nRotation Vec: \n" << rotationVec << "\nTranslation: \n" << translation<<std::endl<<std::endl;
 
 	// Calculate the Full-Projection Matrix
 	Mat leftCameraM;
