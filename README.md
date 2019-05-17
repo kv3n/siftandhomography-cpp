@@ -1,7 +1,9 @@
 # Homography and SFM using C++
 Following was a simple test to understand the SFM pipeline. Started from understanding how to build essentials from OpenCV4.0 branch, then slowly ventured into detecting SIFT features and plotting them on the given images, to finding matches with another image on scene and then there were 2 paths:
 
-## Object detection in Scene
+## SIFT Feature Detection and Keypoint Drawing
+
+
 
 ## Finding camera Rotation and Translation for SFM
 src_1 vs dst_1
