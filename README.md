@@ -1,8 +1,9 @@
-# compvisiontests
-Perform all computer vision / tensorflow tests here.
+# Homography and SFM using C++
+Following was a simple test to understand the SFM pipeline. Started from understanding how to build essentials from OpenCV4.0 branch, then slowly ventured into detecting SIFT features and plotting them on the given images, to finding matches with another image on scene and then there were 2 paths:
 
-# Statistics from Data Set:
+## Object detection in Scene
 
+## Finding camera Rotation and Translation for SFM
 src_1 vs dst_1
 [0.5416514294202881, 0.0729575686538258, 22.24947839959597;
  -0.1019638154153684, 0.5335849908567323, 99.63156264225833;
