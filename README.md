@@ -1,7 +1,7 @@
 # Homography and SFM using C++
 Following was a simple test to understand the SFM pipeline. Started from understanding how to build essentials from OpenCV4.0 branch, then slowly ventured into detecting SIFT features and plotting them on the given images, to finding matches with another image on scene and then there were 2 paths:
 
-## Homography Calculation and Object Boudning Box Detection in Scene
+## [Homography Calculation and Object Boudning Box Detection in Scene](compvisiontests/homographytest.cpp)
 <b>Scene Image (SIFT):</b>  
 ![](compvisiontests/Output/homography/dst_1.jpg)
 
@@ -33,7 +33,7 @@ Following was a simple test to understand the SFM pipeline. Started from underst
   
 ![](compvisiontests/Output/homography/src_2_dst_1.jpg)
 
-## SFM PIPELINE
+## [SFM PIPELINE](compvisiontests/sfm.cpp)
 We use a pre-computed intrinsic matrix for our tests. The following snippet creates this matrix
 ```
 // Intrinsic Matrix
