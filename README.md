@@ -2,7 +2,14 @@
 Following was a simple test to understand the SFM pipeline. Started from understanding how to build essentials from OpenCV4.0 branch, then slowly ventured into detecting SIFT features and plotting them on the given images, to finding matches with another image on scene and then there were 2 paths:
 
 ## SIFT Feature Detection and Keypoint Drawing
+<b>Scene Image:</b>  
+![](compvisiontests/Output/homography/dst_1.jpg)
 
+<b>Object 1 Image:</b>  
+![](compvisiontests/Output/homography/src_1.jpg)
+
+<b>Object 2 Image:</b>  
+![](compvisiontests/Output/homography/src_2.jpg)
 
 
 ## Finding camera Rotation and Translation for SFM
